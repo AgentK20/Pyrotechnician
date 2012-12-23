@@ -1,0 +1,6 @@
+name: Pyrotechnician
+author: AgentK
+version: 0.1-SNAPSHOT
+main: com.araeosia.pyrotechnician.Pyrotechnician
+depend: [Citizens]
+softdepend: [Vault]
