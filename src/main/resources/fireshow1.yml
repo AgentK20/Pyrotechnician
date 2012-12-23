@@ -1,0 +1,72 @@
+#should be in a file named example1.fireshow
+"example1":
+  name: "Example FireShow"
+  announce-5: "The fireshow is starting in 5 minutes!"
+  announce-1: "The fireshow is starting in 1 minute!"
+  # Every 15 seconds less than 1 minute.
+  announce-lt1: "The fireshow is starting soon!"
+  announce: "The fireshow is starting!"
+  acts:
+    1:
+      fireworks:
+        1:
+          # Firework
+          power: 3
+          location:
+            #Location relative to the center as picked by the Pyrotechnician
+            x: -1
+            z: -1
+          effects:
+            1:
+              flicker: true
+              trail: false
+              # http://jd.bukkit.org/apidocs/org/bukkit/FireworkEffect.Type.html
+              specialEffect: CREEPER
+            2:
+              trail: false
+              # http://jd.bukkit.org/apidocs/org/bukkit/FireworkEffect.Type.html
+              specialEffect: BALL
+              colors:
+                - RED
+                - BLUE
+        2:
+          effects:
+            1:
+              # http://jd.bukkit.org/apidocs/org/bukkit/Color.html
+              colors:
+                - RED
+                - BLUE
+              fadeColors:
+                - GREEN
+                - YELLOW
+        3: 
+          location:
+            #Location relative to the center as picked by the Pyrotechnician
+            x: 1
+            z: 1
+    2:
+      delay: 3
+    3:
+      fireworks:
+        1:
+          # Firework
+          location:
+            #Location relative to the center as picked by the Pyrotechnician
+            y: 3
+          flicker: true
+          trail: false
+          # http://jd.bukkit.org/apidocs/org/bukkit/FireworkEffect.Type.html
+          specialEffect: CREEPER
+        2:
+          # http://jd.bukkit.org/apidocs/org/bukkit/Color.html
+          colors:
+            - RED
+            - BLUE
+          fadeColors:
+            - GREEN
+            - YELLOW
+        3: 
+          location:
+            #Location relative to the center as picked by the Pyrotechnician
+            x: 1
+      message: "Another message here!"

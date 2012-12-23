@@ -27,7 +27,7 @@ public class PyroTrait extends Trait {
 
 	@Override
 	public void onAttach() {
-		plugin.debug(npc.getName()+"("+npc.getId()+") loaded as a Pyrotechnician");
+		plugin.debug(npc.getName() + "(" + npc.getId() + ") loaded as a Pyrotechnician");
 	}
 
 	@Override

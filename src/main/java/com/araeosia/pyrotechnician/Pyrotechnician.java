@@ -30,8 +30,8 @@ public class Pyrotechnician extends JavaPlugin {
 	}
 
 	public void debug(String s) {
-		if(debugMode){
-			log.info("Pyrotechnician debug: "+s);
+		if (debugMode) {
+			log.info("Pyrotechnician debug: " + s);
 		}
 	}
 }
