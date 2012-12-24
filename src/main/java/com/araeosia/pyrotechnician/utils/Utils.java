@@ -4,12 +4,15 @@ import com.araeosia.pyrotechnician.Pyrotechnician;
 import com.araeosia.pyrotechnician.utils.FireShow.FireAct;
 import com.araeosia.pyrotechnician.utils.FireShow.FireAct.CustomFirework;
 import java.io.File;
+import java.util.ArrayList;
 import net.citizensnpcs.api.util.DataKey;
 import net.citizensnpcs.api.util.YamlStorage;
 import net.citizensnpcs.api.util.YamlStorage.YamlKey;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Builder;
+import org.bukkit.util.Vector;
 
 public class Utils { // Static utilities class for utility methods.
 
@@ -51,7 +54,16 @@ public class Utils { // Static utilities class for utility methods.
 								cf.setPower(dk2.getInt("power"));
 							}
 							if(dk2.keyExists("location")){
-								
+								Vector v = new Vector();
+								if(dk2.keyExists("location.x")){
+									v.setX(dk2.getInt("location.x"));
+								}
+								if(dk2.keyExists("location.y")){
+									v.setY(dk2.getInt("location.y"));
+								}
+								if(dk2.keyExists("location.z")){
+									v.setZ(dk2.getInt("location.z"));
+								}
 							}
 							if(dk2.keyExists("effects")){
 								DataKey effects = dk2.getRelative("effects");
@@ -67,16 +79,20 @@ public class Utils { // Static utilities class for utility methods.
 										builder = builder.with(FireworkEffect.Type.valueOf(dk3.getString("specialEffect")));
 									}
 									if(dk3.keyExists("colors")){
-										DataKey colors = dk3.getRelative("colors");
-										for(DataKey dk4 : colors.getSubKeys()){
-											// ???
+										ArrayList<Color> colors = new ArrayList<Color>();
+										String[] colordata = dk3.getString("colors").split(",");
+										for(String s : colordata){
+											colors.add(Color.fromRGB(Integer.parseInt(s)));
 										}
+										builder = builder.withColor(colors);
 									}
 									if(dk3.keyExists("fadeColors")){
-										DataKey fadeColors = dk3.getRelative("fadeColors");
-										for(DataKey dk4 : fadeColors.getSubKeys()){
-											// ???
+										ArrayList<Color> fadeColors = new ArrayList<Color>();
+										String[] fadedata = dk3.getString("fadeColors").split(",");
+										for(String s : fadedata){
+											fadeColors.add(Color.fromRGB(Integer.parseInt(s)));
 										}
+										builder = builder.withFade(fadeColors);
 									}
 									FireworkEffect toAdd = builder.build();
 									cf.getEffects().add(toAdd);

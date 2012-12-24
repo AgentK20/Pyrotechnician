@@ -10,12 +10,12 @@
     1:
       fireworks:
         1:
-          # Firework
-          power: 3
+          #Firework burn duration in .5 second intervals. Value of 2 will fly for 1 second and then explode.
+          power: 4
+          #Location relative to the center of the show, which is picked by the Pyrotechnician.
           location:
-            #Location relative to the center as picked by the Pyrotechnician
             x: -1
-            z: -1
+            z: 2
           effects:
             1:
               flicker: true
@@ -24,49 +24,15 @@
               specialEffect: CREEPER
             2:
               trail: false
-              # http://jd.bukkit.org/apidocs/org/bukkit/FireworkEffect.Type.html
               specialEffect: BALL
-              colors:
-                - RED
-                - BLUE
+                # Colors in integer form. http://www.shodor.org/stella2java/rgbint.html
+              colors: 65280,255
         2:
           effects:
             1:
-              # http://jd.bukkit.org/apidocs/org/bukkit/Color.html
-              colors:
-                - RED
-                - BLUE
-              fadeColors:
-                - GREEN
-                - YELLOW
-        3: 
-          location:
-            #Location relative to the center as picked by the Pyrotechnician
-            x: 1
-            z: 1
+              # http://www.shodor.org/stella2java/rgbint.html
+              colors: 16711680,265
+              fadeColors: 65280,16776960,265
     2:
       delay: 3
-    3:
-      fireworks:
-        1:
-          # Firework
-          location:
-            #Location relative to the center as picked by the Pyrotechnician
-            y: 3
-          flicker: true
-          trail: false
-          # http://jd.bukkit.org/apidocs/org/bukkit/FireworkEffect.Type.html
-          specialEffect: CREEPER
-        2:
-          # http://jd.bukkit.org/apidocs/org/bukkit/Color.html
-          colors:
-            - RED
-            - BLUE
-          fadeColors:
-            - GREEN
-            - YELLOW
-        3: 
-          location:
-            #Location relative to the center as picked by the Pyrotechnician
-            x: 1
-      message: "Another message here!"
+      message: "There were supposed to be more fireworks, but someone stole them!"
