@@ -3,6 +3,7 @@ package com.araeosia.pyrotechnician.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.bukkit.FireworkEffect;
+import org.bukkit.util.Vector;
 
 public class FireShow {
 
@@ -44,10 +45,10 @@ public class FireShow {
 
 		private Integer id;
 		private Integer delay = 0;
-		private ArrayList<FireworkEffect> fireworks = new ArrayList<FireworkEffect>();
+		private ArrayList<CustomFirework> fireworks = new ArrayList<CustomFirework>();
+		private String message;
 
-		public FireAct(Integer id) {
-			this.id = id;
+		public FireAct() {
 		}
 
 		public Integer getId() {
@@ -65,9 +66,39 @@ public class FireShow {
 		public void setDelay(Integer i) {
 			this.delay = i;
 		}
+		
+		public void setMessage(String m){
+			this.message = m;
+		}
+		
+		public String getMessage(){
+			return message;
+		}
 
-		public ArrayList<FireworkEffect> getFireworks() {
+		public ArrayList<CustomFirework> getFireworks() {
 			return fireworks;
+		}
+		
+		public class CustomFirework {
+			private Vector location;
+			private ArrayList<FireworkEffect> effects = new ArrayList<FireworkEffect>();
+			private int power;
+			
+			public Vector getLocation(){
+				return location;
+			}
+			public void setLocation(Vector v){
+				this.location = v;
+			}
+			public ArrayList<FireworkEffect> getEffects(){
+				return effects;
+			}
+			public void setPower(int i){
+				this.power = i;
+			}
+			public int getPower(){
+				return power;
+			}
 		}
 	}
 }
