@@ -8,6 +8,7 @@ public class Pyrotechnician extends JavaPlugin {
 
 	private Logger log;
 	private boolean debugMode = false;
+	private ShowHandler showHandler;
 
 	@Override
 	public void onEnable() {
@@ -15,6 +16,7 @@ public class Pyrotechnician extends JavaPlugin {
 		if (!loadDependencies()) {
 			getServer().getPluginManager().disablePlugin(this);
 		}
+		showHandler = new ShowHandler(this);
 	}
 
 	@Override
@@ -33,5 +35,9 @@ public class Pyrotechnician extends JavaPlugin {
 		if (debugMode) {
 			log.info("Pyrotechnician debug: " + s);
 		}
+	}
+	
+	public ShowHandler getShowHandler(){
+		return showHandler;
 	}
 }

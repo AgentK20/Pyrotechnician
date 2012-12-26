@@ -12,6 +12,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Builder;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class Utils { // Static utilities class for utility methods.
@@ -105,5 +107,19 @@ public class Utils { // Static utilities class for utility methods.
 			}
 		}
 		return null;
+	}
+	
+	public static ArrayList<Player> getPlayersInArea(Location loc, Double rangeSquared){
+		return Utils.getPlayersInArea(loc, rangeSquared.intValue());
+	}
+	
+	public static ArrayList<Player> getPlayersInArea(Location loc, Integer rangeSquared){
+		ArrayList<Player> output = new ArrayList<Player>();
+		for(Player p : Bukkit.getServer().getOnlinePlayers()){
+			if(p.getLocation().distanceSquared(loc)<=rangeSquared){
+				output.add(p);
+			}
+		}
+		return output;
 	}
 }

@@ -40,7 +40,7 @@ public class FireShow {
 	public HashMap<Integer, String> getAnnouncements() {
 		return announcements;
 	}
-
+	
 	public class FireAct {
 
 		private Integer id;
