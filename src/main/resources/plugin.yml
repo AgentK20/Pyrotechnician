@@ -4,3 +4,7 @@ version: 0.1-SNAPSHOT
 main: com.araeosia.pyrotechnician.Pyrotechnician
 depend: [Citizens]
 softdepend: [Vault]
+commands:
+  pyro:
+    description: General Pyrotechnician command.
+    usage: /<command>

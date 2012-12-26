@@ -17,6 +17,7 @@ public class Pyrotechnician extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 		}
 		showHandler = new ShowHandler(this);
+		this.getCommand("pyro").setExecutor(new CommandListener(this));
 	}
 
 	@Override
