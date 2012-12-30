@@ -62,17 +62,17 @@ public class PyroTrait extends Trait {
 			FireAct currentAct = activeShow.getFireActs().get(showData);
 			if (currentAct.getDelay() != 0 && !justSlept) {
 				sleep = currentAct.getDelay() * 20;
-				showData = showData-1; // Put us back where we were so we execute this act again.
+				showData = showData - 1; // Put us back where we were so we execute this act again.
 				return;
-			}else if(justSlept){
-				justSlept=false;
+			} else if (justSlept) {
+				justSlept = false;
 			}
-			if(currentAct.getMessage()!=null){
-				for(Player p : Utils.getPlayersInArea(showStartPoint, Math.pow(plugin.getConfig().getInt("Pyrotechnician.range"), 2))){
+			if (currentAct.getMessage() != null) {
+				for (Player p : Utils.getPlayersInArea(showStartPoint, Math.pow(plugin.getConfig().getInt("Pyrotechnician.range"), 2))) {
 					p.sendMessage(currentAct.getMessage());
 				}
 			}
-			for(CustomFirework cf : currentAct.getFireworks()){
+			for (CustomFirework cf : currentAct.getFireworks()) {
 				Location thisFirework = showStartPoint.add(cf.getLocation());
 				Firework entity = (Firework) thisFirework.getWorld().spawnEntity(thisFirework, EntityType.FIREWORK);
 				FireworkMeta meta = entity.getFireworkMeta();
@@ -89,6 +89,9 @@ public class PyroTrait extends Trait {
 	@Override
 	public void onAttach() {
 		plugin.debug(npc.getName() + "(" + npc.getId() + ") loaded as a Pyrotechnician");
+		for (Player p : Utils.getPlayersByNPCSelection(npc.getId())) {
+			p.sendMessage(npc.getFullName() + " has been set to a Pyrotechnician.");
+		}
 	}
 
 	@Override
@@ -101,5 +104,13 @@ public class PyroTrait extends Trait {
 
 	@Override
 	public void onRemove() {
+	}
+	
+	public FireShow getShow(){
+		return activeShow;
+	}
+	
+	public void setShow(FireShow fs){
+		this.activeShow = fs;
 	}
 }

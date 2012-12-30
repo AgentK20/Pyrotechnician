@@ -7,17 +7,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Pyrotechnician extends JavaPlugin {
 
 	private Logger log;
-	private boolean debugMode = false;
 	private ShowHandler showHandler;
+	
+	private boolean debugMode=false;
 
 	@Override
 	public void onEnable() {
+		loadConfig();
 		log = getLogger();
 		if (!loadDependencies()) {
 			getServer().getPluginManager().disablePlugin(this);
 		}
 		showHandler = new ShowHandler(this);
+		showHandler.loadShows();
 		this.getCommand("pyro").setExecutor(new CommandListener(this));
+		net.citizensnpcs.api.CitizensAPI.getTraitFactory().registerTrait(net.citizensnpcs.api.trait.TraitInfo.create(PyroTrait.class).withName("Pyrotechnician"));
 	}
 
 	@Override
@@ -40,5 +44,12 @@ public class Pyrotechnician extends JavaPlugin {
 	
 	public ShowHandler getShowHandler(){
 		return showHandler;
+	}
+	
+	public void loadConfig(){
+		if(getConfig().getDouble("Pyrotechnician.technical.version")!=0.1){
+			// Save default config to disk?
+		}
+		debugMode = getConfig().getBoolean("Pyrotechnician.technical.debugMode");
 	}
 }
