@@ -1,7 +1,9 @@
 package com.araeosia.pyrotechnician;
 
 import com.araeosia.pyrotechnician.utils.FireShow;
+import com.araeosia.pyrotechnician.utils.FireShow;
 import com.araeosia.pyrotechnician.utils.Utils;
+import java.util.List;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,8 +25,8 @@ public class CommandListener implements CommandExecutor, Listener {
 				if (args.length == 0) {
 					sendHelp(cs);
 				} else if (args[0].equalsIgnoreCase("show")) {
-					if (args.length == 3) {
-						FireShow show = plugin.getShowHandler().getShow(args[2]);
+					if (args.length >= 3) {
+						FireShow show = plugin.getShowHandler().getShow(Utils.compressList(Utils.arrayToList(args)));
 						if (show != null) {
 							if (cs instanceof Player) {
 								Player p = (Player) cs;
@@ -32,7 +34,7 @@ public class CommandListener implements CommandExecutor, Listener {
 								if (npc != null) {
 									PyroTrait trait = npc.getTrait(PyroTrait.class);
 									trait.setShow(show);
-									cs.sendMessage("This NPCs FireShow has been set to " + show.getName());
+									cs.sendMessage("This NPCs FireShow has been set to " + show.getKey() + ": "+show.getName());
 								} else {
 									cs.sendMessage("You must have selected a valid Pyrotechnician to set it's show!");
 								}
@@ -48,9 +50,9 @@ public class CommandListener implements CommandExecutor, Listener {
 							NPC npc = Utils.getSelectedNPC(p);
 							if (npc != null) {
 								PyroTrait trait = npc.getTrait(PyroTrait.class);
-								FireShow show = trait.getShow();
-								if (show != null) {
-									cs.sendMessage("This NPC's FireShow is currently set to " + show.getName());
+								FireShow show = trait.getActiveShow();
+								if (show != null || trait.getFireShows().size()>0) {
+									cs.sendMessage("This NPC's active FireShow is " + show.getKey() + ": "+show.getName());
 								} else {
 									cs.sendMessage("This NPC does not currently have a FireShow set.");
 								}
@@ -68,9 +70,9 @@ public class CommandListener implements CommandExecutor, Listener {
 					String output = "FireShows: ";
 					for (FireShow fs : plugin.getShowHandler().getShows().values()) {
 						if (output.length() == 11) {
-							output = fs.getName();
+							output = fs.getKey();
 						} else {
-							output = output + ", " + fs.getName();
+							output = output + ", " + fs.getKey();
 						}
 					}
 					if(output.length() == 11){
@@ -82,9 +84,21 @@ public class CommandListener implements CommandExecutor, Listener {
 					plugin.getShowHandler().loadShows();
 					int newCount = plugin.getShowHandler().getShows().size()-before;
 					cs.sendMessage("Loaded "+newCount+" new shows.");
+				} else if (args[0].equalsIgnoreCase("execute")){
+					if(cs instanceof Player){
+						Player p = (Player) cs;
+						NPC npc = Utils.getSelectedNPC(p);
+						if(npc!=null){
+							if(npc.hasTrait(PyroTrait.class)){
+								PyroTrait trait = npc.getTrait(PyroTrait.class);
+								trait.setActiveShow();
+							}
+						}
+					}
 				} else {
 					sendHelp(cs);
 				}
+				
 			} else {
 				cs.sendMessage("Sorry, you don't have permission to use this command.");
 			}

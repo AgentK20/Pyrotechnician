@@ -18,7 +18,7 @@ public class PyroTrait extends Trait {
 
 	private Pyrotechnician plugin;
 	private Long currTime = 0L; // Separate from System.currentTimeMillis() to prevent lag from skipping start of a FireShow.
-	private HashMap<Long, FireShow> shows = new HashMap<Long, FireShow>(); // Timestamp => NPCID
+	private HashMap<Long, FireShow> shows = new HashMap<Long, FireShow>(); // Timestamp => Show
 	private FireShow activeShow = null;
 	private Integer showData = -1;
 	private int sleep = 0;
@@ -32,10 +32,36 @@ public class PyroTrait extends Trait {
 
 	@Override
 	public void load(DataKey key) {
+		this.justSlept = key.getBoolean("justSlept");
+		this.showData = key.getInt("showData");
+		this.showStartPoint = new Location(
+				plugin.getServer().getWorld(key.getString("location.world")),
+				key.getInt("location.x"),
+				key.getInt("location.y"),
+				key.getInt("location.z"));
+		this.sleep = key.getInt("sleep");
+		this.currTime = key.getLong("currTime");
+		for(int i = 0; key.keyExists("shows."+i); i++){
+			this.shows.put(key.getLong("shows."+i+".time"), plugin.getShowHandler().getShow(key.getString("shows."+i+".show")));
+		}
 	}
 
 	@Override
 	public void save(DataKey key) {
+		key.setBoolean("justSlept", justSlept);
+		key.setInt("showData", showData);
+		key.setString("location.world", showStartPoint.getWorld().getName());
+		key.setInt("location.x", showStartPoint.getBlockX());
+		key.setInt("location.y", showStartPoint.getBlockY());
+		key.setInt("location.z", showStartPoint.getBlockZ());
+		key.setInt("sleep", sleep);
+		key.setLong("currTime", currTime);
+		int i=0;
+		for(Long l : shows.keySet()){
+			key.setLong("shows."+i+".time", l);
+			key.setString("shows."+i+".show", shows.get(l).getKey());
+			i++;
+		}
 	}
 
 	@Override
@@ -105,12 +131,16 @@ public class PyroTrait extends Trait {
 	@Override
 	public void onRemove() {
 	}
-	
-	public FireShow getShow(){
+
+	public FireShow getActiveShow() {
 		return activeShow;
 	}
-	
-	public void setShow(FireShow fs){
+
+	public void getActiveShow(FireShow fs) {
 		this.activeShow = fs;
+	}
+	
+	public HashMap<Long, FireShow> getFireShows() {
+		return shows;
 	}
 }

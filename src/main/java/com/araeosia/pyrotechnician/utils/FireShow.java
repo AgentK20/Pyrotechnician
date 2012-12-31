@@ -8,15 +8,21 @@ import org.bukkit.util.Vector;
 public class FireShow {
 
 	private String name;
+	private String key;
 	private HashMap<Integer, String> announcements = new HashMap<Integer, String>();
 	private HashMap<Integer, FireAct> fireacts = new HashMap<Integer, FireAct>();
 
-	public FireShow(String name) {
+	public FireShow(String key, String name) {
+		this.key = key;
 		this.name = name;
 	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getKey() {
+		return key;
 	}
 
 	public String getAnnouncement(Integer i) {

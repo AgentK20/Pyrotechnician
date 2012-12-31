@@ -30,12 +30,13 @@ public class Utils { // Static utilities class for utility methods.
 		if(!storageLoc.exists()){storageLoc.mkdir();}
 		File actualFile = new File(storageLoc.getAbsolutePath()+File.separator+key+".yml");
 		YamlStorage storage = new YamlStorage(actualFile);
+		storage.load();
 		plugin.debug("Loading file from "+actualFile.getAbsolutePath());
 		if (storage.getKey(key) != null) {
 			YamlKey data = storage.getKey(key); // This one FireShow.
 			plugin.debug("Data: "+data.toString());
 			if(data.keyExists("name")){
-				FireShow output = new FireShow(data.getString("name"));
+				FireShow output = new FireShow(key, data.getString("name"));
 				plugin.debug("Looks like it is named "+data.getString("name"));
 				if(data.keyExists("announce-5")){
 					plugin.debug("5 minute announcement set to "+data.getString("announce-5"));
@@ -106,6 +107,8 @@ public class Utils { // Static utilities class for utility methods.
 											colors.add(Color.fromRGB(Integer.parseInt(s)));
 										}
 										builder = builder.withColor(colors);
+									}else{
+										builder = builder.withColor(Color.WHITE);
 									}
 									if(dk3.keyExists("fadeColors")){
 										ArrayList<Color> fadeColors = new ArrayList<Color>();
@@ -177,5 +180,24 @@ public class Utils { // Static utilities class for utility methods.
 			}
 		}
 		return null;
+	}
+	
+	public static ArrayList<String> arrayToList(String[] input){
+		ArrayList<String> output = new ArrayList<String>();
+		for(String s : input){
+			output.add(s);
+		}
+		return output;
+	}
+	
+	public static String compressList(ArrayList<String> input){
+		String output = "";
+		int size = input.size();
+		for(int i=0; i<size; i++){
+			if(i>1){
+				output = output+" "+input.get(i);
+			}
+		}
+		return output.trim();
 	}
 }
